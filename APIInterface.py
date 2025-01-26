@@ -1,12 +1,13 @@
-import requests
+# import requests
 
-class DataService:
-    def __init__(self, url, device_id):
+class DataTransferService:
+    def __init__(self, url, device_id, logger):
         self.url = url
         self.device_id = device_id
+        self.logger = logger
 
     def submit_reading(self, reading):
-        jsonData = {
+        json_data = {
             "deviceId": self.device_id,
             "timestamp": reading.timestamp.strftime("%m/%d/%Y, %H:%M:%S"),
             "humidityPercentage": reading.humidity,
@@ -14,7 +15,13 @@ class DataService:
             "co2ppm": reading.co2
         }
 
-        print(f"DataService: {self.url}, Device Id: {self.device_id}\n")
-        print(f"Sending Data: {jsonData}\n")
-        response = requests.post(self.url, json=jsonData, verify=False)
-        print(f"Data transfer status code: {response.status_code}\n")
+        self.logger.info(f"DataService: {self.url}, Device Id: {self.device_id}")
+
+        try:
+            self.logger.info(f"Sending data: {json_data}")
+            # response = requests.post(self.url, json=json_data, verify=False)
+            # self.logger.info(f"Data transfer status code: {response.status_code}")
+        except:
+            self.logger.exception("Error sending data")
+        finally:
+            self.logger.info("Terminating data transfer")
