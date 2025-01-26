@@ -19,8 +19,8 @@ class DataTransferService:
 
         try:
             self.logger.info(f"Sending data: {json_data}")
-            # response = requests.post(self.url, json=json_data, verify=False)
-            # self.logger.info(f"Data transfer status code: {response.status_code}")
+            response = requests.post(self.url, json=json_data, verify=False)
+            self.logger.info(f"Data transfer status code: {response.status_code}")
         except:
             self.logger.exception("Error sending data")
         finally:
