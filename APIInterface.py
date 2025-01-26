@@ -1,4 +1,4 @@
-# import requests
+import requests
 
 class DataTransferService:
     def __init__(self, url, device_id, logger):
