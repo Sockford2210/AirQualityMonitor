@@ -19,7 +19,7 @@ class AirQualityMonitor:
 
     def take_reading(self):
         if self.scd.data_available:
-            self.logger("Data available on scd board")
+            self.logger.info("Data available on scd board")
             timestamp = datetime.now()
             new_reading = AirQualityReading(self.scd.CO2, self.scd.temperature, self.scd.relative_humidity, timestamp)
             self.logger.info(f"New reading: {new_reading}")
