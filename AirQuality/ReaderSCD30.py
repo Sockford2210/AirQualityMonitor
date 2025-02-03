@@ -2,13 +2,13 @@ import board
 import busio
 import adafruit_scd30
 from datetime import datetime
-from AirQuality import AirQualityReading
+from Reading import AirQualityReading
 
 # SCD-30 has tempremental I2C with clock stretching, datasheet recommends
 # starting at 50KHz
 FREQUENCY = 50000
 
-class AirQualityMonitor:
+class AirQualityReader:
     def __init__(self, logger):
         self.logger = logger
         i2c = busio.I2C(board.SCL, board.SDA, frequency=FREQUENCY)
