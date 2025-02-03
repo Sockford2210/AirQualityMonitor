@@ -2,7 +2,7 @@ import board
 import busio
 import adafruit_scd30
 from datetime import datetime
-from Reading import AirQualityReading
+from AirQuality.Reading import AirQualityReading
 
 # SCD-30 has tempremental I2C with clock stretching, datasheet recommends
 # starting at 50KHz
