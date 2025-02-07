@@ -1,30 +1,22 @@
-import board
-import busio
-import adafruit_scd30
 from datetime import datetime
 from AirQuality.Reading import AirQualityReading
-
-# SCD-30 has tempremental I2C with clock stretching, datasheet recommends
-# starting at 50KHz
-FREQUENCY = 50000
-SCD30_ADDRESS = 0x61
+from AirQuality.SCD30Setup import scd30
 
 class AirQualityReader:
     def __init__(self, logger):
-        self.logger = logger
-        i2c_bus = busio.I2C(board.SCL, board.SDA, frequency=FREQUENCY)
-        self.scd = adafruit_scd30.SCD30(i2c_bus=i2c_bus, address=SCD30_ADDRESS)
+        self.__logger = logger
+        self.__scd30 = scd30
 
     def is_data_available(self):
-        return self.scd.data_available
+        return self.__scd30.data_available
 
     def take_reading(self):
-        if self.scd.data_available:
-            self.logger.info("Data available on scd board")
+        if self.__scd30.data_available:
+            self.__logger.info("Data available on SCD30 board")
             timestamp = datetime.now()
-            new_reading = AirQualityReading(self.scd.CO2, self.scd.temperature, self.scd.relative_humidity, timestamp)
-            self.logger.info(f"New reading: {new_reading}")
+            new_reading = AirQualityReading(self.__scd30.CO2, self.__scd30.temperature, self.__scd30.relative_humidity, timestamp)
+            self.__logger.info(f"New reading: {new_reading}")
             return new_reading
 
         else:
-            self.logger.error("Data not available on scd board")
+            self.__logger.error("Data not available on SCD30 board")

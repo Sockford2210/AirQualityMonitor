@@ -1,22 +1,34 @@
 from Display.OLEDInterface import FourRowOLEDDisplay
+from Display.LEDInterface import LEDInterface
 
 class AirQualityDisplay:
     def __init__(self, logger):
-        self.logger = logger
-        self.display = FourRowOLEDDisplay()
+        self.__logger = logger
+        self.__display = FourRowOLEDDisplay()
+        self.__led_interface = LEDInterface(logger)
+
+    def __del__(self):
+        del self.__display
+        del self.__led_interface
 
     def update_air_quality_values(self, air_quality):
-        self.logger.info("Updating air quality display")
+        self.__logger.info("Updating air quality display")
 
         try:
-            self.display.reset()
+            self.__display.reset()
             
-            self.display.set_row_one(f"CO2: {air_quality.get_co2_display()}")
-            self.display.set_row_two(f"Humidity: {air_quality.get_humidity_display()}")
-            self.display.set_row_three(f"Temperature: {air_quality.get_temperature_display()}")
+            self.__display.set_row_one(f"CO2: {air_quality.get_co2_display()}")
+            self.__display.set_row_two(f"Hum: {air_quality.get_humidity_display()}")
+            self.__display.set_row_three(f"Temp: {air_quality.get_temperature_display()}")
 
-            self.display.show()
+            self.__display.show()
 
-            self.logger.info("Updated air quality display")
+            self.__logger.info("Updated air quality display")
         except:
-            self.logger.error("Error updating air quality display")
+            self.__logger.error("Error updating air quality display")
+
+    def set_high_co2_alert_light(self):
+        self.__led_interface.turn_red_on()
+
+    def unset_high_co2_alert_light(self):
+        self.__led_interface.turn_red_off()
