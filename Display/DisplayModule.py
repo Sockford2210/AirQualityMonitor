@@ -6,8 +6,10 @@ class AirQualityDisplay:
         self.__logger = logger
         self.__display = FourRowOLEDDisplay()
         self.__led_interface = LEDInterface(logger)
+        self.__led_interface.turn_green_on()
 
     def __del__(self):
+        self.__led_interface.turn_green_off()
         del self.__display
         del self.__led_interface
 

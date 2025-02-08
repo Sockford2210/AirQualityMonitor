@@ -11,12 +11,13 @@ class AirQualityReader:
         return self.__scd30.data_available
 
     def take_reading(self):
-        if self.__scd30.data_available:
-            self.__logger.info("Data available on SCD30 board")
+        self.__logger.info("Reading data on SCD30 board")
+        try:
             timestamp = datetime.now()
             new_reading = AirQualityReading(self.__scd30.CO2, self.__scd30.temperature, self.__scd30.relative_humidity, timestamp)
             self.__logger.info(f"New reading: {new_reading}")
             return new_reading
 
-        else:
+        except:
             self.__logger.error("Data not available on SCD30 board")
+            raise Exception("Data not available on SCD30 board")

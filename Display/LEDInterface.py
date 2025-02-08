@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 
 GREEN_LED_PIN_NUMBER = 24
-RED_LED_PIN_NUMBER = 23
+RED_LED_PIN_NUMBER = 18
 
 class LEDInterface:
     def __init__(self, logger):

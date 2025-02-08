@@ -15,6 +15,7 @@ Install cictuipython library *pip3 install --upgrade adafruit-python-shell*
 Install adafruit ssd1306 library tools: *pip3 install --upgrade pillow*
 Install adafruit scd30 library tools: *pip3 install --upgrade adafruit-circuitpython-scd30*
 Install adafruit ssd1306 library tools: *pip3 install --upgrade adafruit-circuitpython-ssd1306*
+Install requests library: *pip3 install --upgrade requests*
 
 I2c bus addresses:
 SCD30: 61
